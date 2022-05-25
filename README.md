@@ -1,1 +1,3 @@
-# ISLRv2_python
+# ISLRv2_python  
+
+I really enjoy reading [An Introduction to Statistical Learning with Applications in R Second Edition](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf) to develop my knowledge of statistical in machine learning. I create this repository for people like me who also want to implement the tasks in this book in python. You can also read it in the online version [here](ferygood.github.io/ISLRv2_python).
