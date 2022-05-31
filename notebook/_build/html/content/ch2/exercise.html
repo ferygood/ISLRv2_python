@@ -213,6 +213,36 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#q8">
+   Q8.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#q9">
+   Q9
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-which-of-the-predictors-are-quantitative-and-which-are-qualitative">
+     (a) Which of the predictors are quantitative, and which are qualitative?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-what-is-the-range-of-each-quantitative-predictor">
+     (b) What is the range of each quantitative predictor?
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -224,8 +254,10 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="applied">
 <h1>Applied<a class="headerlink" href="#applied" title="Permalink to this headline">¶</a></h1>
 <p>This section we will go through the applied exercise part. Contents are related to <em>p.66</em> in the <a class="reference external" href="https://hastie.su.domains/ISLR2/ISLRv2_website.pdf">ISLRv2 book</a><br />
-<br/>
-<strong>Q8.</strong> This exercise relates to the “College” data set, which can be found in the file <code class="docutils literal notranslate"><span class="pre">College.csv</span></code> on the book <a class="reference external" href="https://www.statlearning.com/resources-second-edition">website</a>. It contains a number of variables for 777 different universities and colleges in the US.
+<br/></p>
+<div class="section" id="q8">
+<h2>Q8.<a class="headerlink" href="#q8" title="Permalink to this headline">¶</a></h2>
+<p>This exercise relates to the “College” data set, which can be found in the file <code class="docutils literal notranslate"><span class="pre">College.csv</span></code> on the book <a class="reference external" href="https://www.statlearning.com/resources-second-edition">website</a>. It contains a number of variables for 777 different universities and colleges in the US.
 a. Load College.csv data</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -806,7 +838,7 @@ a. Load College.csv data</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7fa0d9619730&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7fdd2cd69970&gt;
 </pre></div>
 </div>
 <img alt="../../_images/exercise_10_1.png" src="../../_images/exercise_10_1.png" />
@@ -818,11 +850,585 @@ a. Load College.csv data</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Private&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Outstate&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Private&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">college</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Private vs. Outstate&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/exercise_12_0.png" src="../../_images/exercise_12_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>(c) iv. Create a new qualitative variable, called <code class="docutils literal notranslate"><span class="pre">Elite</span></code>, by binning the <code class="docutils literal notranslate"><span class="pre">Top10perc</span></code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 create a Elite list and set it as no first</span>
+<span class="n">college</span><span class="p">[</span><span class="s1">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;no&#39;</span>
+
+<span class="c1"># 2 if Top10perc is larger than 50, change Elite to yes</span>
+<span class="n">college</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">college</span><span class="p">[</span><span class="s1">&#39;Top10perc&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;yes&#39;</span>
+<span class="n">college</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Private</th>
+      <th>Apps</th>
+      <th>Accept</th>
+      <th>Enroll</th>
+      <th>Top10perc</th>
+      <th>Top25perc</th>
+      <th>F.Undergrad</th>
+      <th>P.Undergrad</th>
+      <th>Outstate</th>
+      <th>Room.Board</th>
+      <th>Books</th>
+      <th>Personal</th>
+      <th>PhD</th>
+      <th>Terminal</th>
+      <th>S.F.Ratio</th>
+      <th>perc.alumni</th>
+      <th>Expend</th>
+      <th>Grad.Rate</th>
+      <th>Elite</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>777</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.000000</td>
+      <td>777.00000</td>
+      <td>777</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>2</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>Yes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>565</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>699</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>NaN</td>
+      <td>3001.638353</td>
+      <td>2018.804376</td>
+      <td>779.972973</td>
+      <td>27.558559</td>
+      <td>55.796654</td>
+      <td>3699.907336</td>
+      <td>855.298584</td>
+      <td>10440.669241</td>
+      <td>4357.526384</td>
+      <td>549.380952</td>
+      <td>1340.642214</td>
+      <td>72.660232</td>
+      <td>79.702703</td>
+      <td>14.089704</td>
+      <td>22.743887</td>
+      <td>9660.171171</td>
+      <td>65.46332</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>3870.201484</td>
+      <td>2451.113971</td>
+      <td>929.176190</td>
+      <td>17.640364</td>
+      <td>19.804778</td>
+      <td>4850.420531</td>
+      <td>1522.431887</td>
+      <td>4023.016484</td>
+      <td>1096.696416</td>
+      <td>165.105360</td>
+      <td>677.071454</td>
+      <td>16.328155</td>
+      <td>14.722359</td>
+      <td>3.958349</td>
+      <td>12.391801</td>
+      <td>5221.768440</td>
+      <td>17.17771</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>NaN</td>
+      <td>81.000000</td>
+      <td>72.000000</td>
+      <td>35.000000</td>
+      <td>1.000000</td>
+      <td>9.000000</td>
+      <td>139.000000</td>
+      <td>1.000000</td>
+      <td>2340.000000</td>
+      <td>1780.000000</td>
+      <td>96.000000</td>
+      <td>250.000000</td>
+      <td>8.000000</td>
+      <td>24.000000</td>
+      <td>2.500000</td>
+      <td>0.000000</td>
+      <td>3186.000000</td>
+      <td>10.00000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>NaN</td>
+      <td>776.000000</td>
+      <td>604.000000</td>
+      <td>242.000000</td>
+      <td>15.000000</td>
+      <td>41.000000</td>
+      <td>992.000000</td>
+      <td>95.000000</td>
+      <td>7320.000000</td>
+      <td>3597.000000</td>
+      <td>470.000000</td>
+      <td>850.000000</td>
+      <td>62.000000</td>
+      <td>71.000000</td>
+      <td>11.500000</td>
+      <td>13.000000</td>
+      <td>6751.000000</td>
+      <td>53.00000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>NaN</td>
+      <td>1558.000000</td>
+      <td>1110.000000</td>
+      <td>434.000000</td>
+      <td>23.000000</td>
+      <td>54.000000</td>
+      <td>1707.000000</td>
+      <td>353.000000</td>
+      <td>9990.000000</td>
+      <td>4200.000000</td>
+      <td>500.000000</td>
+      <td>1200.000000</td>
+      <td>75.000000</td>
+      <td>82.000000</td>
+      <td>13.600000</td>
+      <td>21.000000</td>
+      <td>8377.000000</td>
+      <td>65.00000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>NaN</td>
+      <td>3624.000000</td>
+      <td>2424.000000</td>
+      <td>902.000000</td>
+      <td>35.000000</td>
+      <td>69.000000</td>
+      <td>4005.000000</td>
+      <td>967.000000</td>
+      <td>12925.000000</td>
+      <td>5050.000000</td>
+      <td>600.000000</td>
+      <td>1700.000000</td>
+      <td>85.000000</td>
+      <td>92.000000</td>
+      <td>16.500000</td>
+      <td>31.000000</td>
+      <td>10830.000000</td>
+      <td>78.00000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>NaN</td>
+      <td>48094.000000</td>
+      <td>26330.000000</td>
+      <td>6392.000000</td>
+      <td>96.000000</td>
+      <td>100.000000</td>
+      <td>31643.000000</td>
+      <td>21836.000000</td>
+      <td>21700.000000</td>
+      <td>8124.000000</td>
+      <td>2340.000000</td>
+      <td>6800.000000</td>
+      <td>103.000000</td>
+      <td>100.000000</td>
+      <td>39.800000</td>
+      <td>64.000000</td>
+      <td>56233.000000</td>
+      <td>118.00000</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Find out how many elite universities there are. Also produce a side-by-side boxplots of <code class="docutils literal notranslate"><span class="pre">Outstate</span></code> versus <code class="docutils literal notranslate"><span class="pre">Elite</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># elite univerisities</span>
+<span class="n">elite_count</span> <span class="o">=</span> <span class="n">college</span><span class="p">[</span><span class="n">college</span><span class="p">[</span><span class="s1">&#39;Elite&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;yes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are </span><span class="si">%s</span><span class="s2"> elite universities.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">elite_count</span><span class="p">))</span>
+
+<span class="c1"># side-by-side boxplot</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Elite&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Outstate&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Elite&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">college</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Elite vs. Outstate&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>There are 78 elite universities.
+</pre></div>
+</div>
+<img alt="../../_images/exercise_16_1.png" src="../../_images/exercise_16_1.png" />
+</div>
+</div>
+<p>(c) v. Produce histograms with differing numbers of bins for a few of the quantitative variables. Try to divide the print window to certain regions so that plots can be made simultaneously.
+vi. Continue exploring the data, and provide a brief summary of what you discover (to-do)</p>
+<p>Below we first explore <code class="docutils literal notranslate"><span class="pre">PhD</span></code> feature. This feature is the percent of faculty with Ph.D.’s. As you can see in the histogram, this feature appears a left-skewed distribution and the largest number of faculty to have Ph.D. degree is over a hundred.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;PhD&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;PhD&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;olive&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;PhD&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;PhD&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/exercise_19_0.png" src="../../_images/exercise_19_0.png" />
+</div>
+</div>
+<p>Next, we give another example on feature <code class="docutils literal notranslate"><span class="pre">Personal</span></code>. This feature shows the information of estimated personal spending in our data. As you can see in these figure, the estimated spending has a right-skewed (positive skew) distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Personal&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Personal&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;olive&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Personal&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">college</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Personal&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/exercise_21_0.png" src="../../_images/exercise_21_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="q9">
+<h2>Q9<a class="headerlink" href="#q9" title="Permalink to this headline">¶</a></h2>
+<p>This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.</p>
+<div class="section" id="a-which-of-the-predictors-are-quantitative-and-which-are-qualitative">
+<h3>(a) Which of the predictors are quantitative, and which are qualitative?<a class="headerlink" href="#a-which-of-the-predictors-are-quantitative-and-which-are-qualitative" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/Auto.csv&quot;</span><span class="p">)</span>
+<span class="n">auto</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">auto</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">auto</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mpg             float64
+cylinders         int64
+displacement    float64
+horsepower       object
+weight            int64
+acceleration    float64
+year              int64
+origin            int64
+name             object
+dtype: object
+(397, 9)
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, basically we have 397 rows and 9 columns in our Auto data. Among 9 features, mpg, cylinders, displacement, weight, acceleration, year, and origin are quantitative. Horsepower and name are qualitative.
+<br/></p>
+</div>
+<div class="section" id="b-what-is-the-range-of-each-quantitative-predictor">
+<h3>(b) What is the range of each quantitative predictor?<a class="headerlink" href="#b-what-is-the-range-of-each-quantitative-predictor" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mpg</th>
+      <th>cylinders</th>
+      <th>displacement</th>
+      <th>horsepower</th>
+      <th>weight</th>
+      <th>acceleration</th>
+      <th>year</th>
+      <th>origin</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>397.000000</td>
+      <td>397.000000</td>
+      <td>397.000000</td>
+      <td>397</td>
+      <td>397.000000</td>
+      <td>397.000000</td>
+      <td>397.000000</td>
+      <td>397.000000</td>
+      <td>397</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>94</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>304</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>150</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>ford pinto</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>22</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>23.515869</td>
+      <td>5.458438</td>
+      <td>193.532746</td>
+      <td>NaN</td>
+      <td>2970.261965</td>
+      <td>15.555668</td>
+      <td>75.994962</td>
+      <td>1.574307</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>7.825804</td>
+      <td>1.701577</td>
+      <td>104.379583</td>
+      <td>NaN</td>
+      <td>847.904119</td>
+      <td>2.749995</td>
+      <td>3.690005</td>
+      <td>0.802549</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>9.000000</td>
+      <td>3.000000</td>
+      <td>68.000000</td>
+      <td>NaN</td>
+      <td>1613.000000</td>
+      <td>8.000000</td>
+      <td>70.000000</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>17.500000</td>
+      <td>4.000000</td>
+      <td>104.000000</td>
+      <td>NaN</td>
+      <td>2223.000000</td>
+      <td>13.800000</td>
+      <td>73.000000</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>23.000000</td>
+      <td>4.000000</td>
+      <td>146.000000</td>
+      <td>NaN</td>
+      <td>2800.000000</td>
+      <td>15.500000</td>
+      <td>76.000000</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>29.000000</td>
+      <td>8.000000</td>
+      <td>262.000000</td>
+      <td>NaN</td>
+      <td>3609.000000</td>
+      <td>17.100000</td>
+      <td>79.000000</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>46.600000</td>
+      <td>8.000000</td>
+      <td>455.000000</td>
+      <td>NaN</td>
+      <td>5140.000000</td>
+      <td>24.800000</td>
+      <td>82.000000</td>
+      <td>3.000000</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You can now see the range of each quantitative predictors from the dataframe above. For example, the range of <code class="docutils literal notranslate"><span class="pre">mpg</span></code> is from 9 to 46, and the range of <code class="docutils literal notranslate"><span class="pre">cylinders</span></code> is from 3 to 8 respectively.</p>
 </div>
 </div>
 </div>
