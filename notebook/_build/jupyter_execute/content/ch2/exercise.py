@@ -142,19 +142,83 @@ plt.show()
 
 
 auto = pd.read_csv("data/Auto.csv")
-auto.dropna(inplace=True)
 print(auto.dtypes)
 print(auto.shape)
 
 
-# So, basically we have 397 rows and 9 columns in our Auto data. Among 9 features, mpg, cylinders, displacement, weight, acceleration, year, and origin are quantitative. Horsepower and name are qualitative.
+# In[13]:
+
+
+import numpy as np
+
+# we found that there are question mark in the dataframe
+auto = auto.replace("?", np.nan)
+auto['horsepower'] = pd.to_numeric(auto['horsepower'])
+auto.dropna(inplace=True)
+print(auto.shape)
+print(auto.dtypes)
+
+
+# So, basically we have 392 rows and 9 columns in our Auto data. Among 9 features, mpg, cylinders, displacement, weight, acceleration, year, and origin are quantitative. Horsepower and name are qualitative.
 # <br/>
 # ### (b) What is the range of each quantitative predictor?
 
-# In[13]:
+# In[14]:
 
 
 auto.describe(include='all')
 
 
-# You can now see the range of each quantitative predictors from the dataframe above. For example, the range of `mpg` is from 9 to 46, and the range of `cylinders` is from 3 to 8 respectively.
+# You can now see the range of each quantitative predictors from the dataframe above. For example, the range of `mpg` is from 9 to 46, and the range of `cylinders` is from 3 to 8 respectively.  
+#   
+# ## (c) What is the *mean* and *standard deviation* of each quantitative predictor?  
+# We can look up the previous output dataframe again. For example, `mpg` has a mean value 23.515869 and standard deviation as 7.825804.  
+#   
+# ## (d) Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
+
+# In[15]:
+
+
+auto_subset = auto.drop(auto.index[9:85])
+print(auto_subset.index)
+auto_subset.describe(include='all')
+
+
+# We can use `.drop` attributes in pandas to drop rows by index number. Remember python index starts from 0, and not include the the suffix. Therefore, we need to set the rows we want to remove as `[9:85]`. Then we can look up the answer, for example, `mpg` now has 24.438629 as mean and 7.908184 as standard deviation.  
+#   
+# ## (e) Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highligting the relationships among the predictors. Comment on your findings.
+
+# In[16]:
+
+
+sns.pairplot(auto, corner=True)
+
+
+# We first use a pair-scatterplot to visualize the relationship of one-to-one predictors. These observation can show that quantitative variables has a trend of positive correlation such as `displacement` and `weight`, `mpg` and `acceleration`, `displacement` and `horsepower`. Other varibales has negative correlation such as `mpg` and `weight`, `weight` and `accelearation`, `mpg` and `horsepower`.  
+#   
+# ## (f) Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer.  
+#   
+# From the pairplot above, we can have a first insight that quantitative predictors will be useful to predict mpg since we have seen some trends. To justify we can calculate their correlations.
+
+# In[17]:
+
+
+import numpy as np
+
+# compute correlation matrix
+corr = auto.corr()
+
+# generate a mask for hte upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+# set up matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+
+# Generate a custom divergin colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Draw the heatmap with the mask and correct aspect ratio
+sns.heatmap(corr, mask=mask, cmap=cmap, square=True, linewidths=.5, cbar_kws={"shrink": .8}, annot=True)
+
+
+# We can see from above that `weight`, `displacement`, `horsepower` and `cyclinders` have strong negative correlation coefficients (approx. lower than -0.8). Therefore, we can consider to use these three predictors to predict mpg from the Auto dataset.
